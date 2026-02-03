@@ -4,8 +4,10 @@ interface Props {
 
 function Log({ onClick }: Props) {
   return (
-    <div className="controls">
-      <button onClick={onClick}>Logs</button>
+    <div id="log-container" className="controls">
+      <button className="log-button" onClick={onClick}>
+        logs
+      </button>
     </div>
   );
 }

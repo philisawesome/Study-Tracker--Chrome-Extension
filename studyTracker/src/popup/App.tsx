@@ -1,6 +1,8 @@
 import Home from "../popup/Home";
 import LogPage from "../popup/LogPage";
+import GraphPage from "../popup/GraphPage";
 import "../styles/HomePage.css";
+import "../styles/GraphPage.css";
 
 import type { AppScreen } from "../types/types";
 
@@ -19,6 +21,12 @@ function App() {
       return (
         <div className="logs">
           <LogPage setCurScreen={setCurScreen}></LogPage>
+        </div>
+      );
+    case "graph":
+      return (
+        <div className="graph">
+          <GraphPage setCurScreen={setCurScreen}></GraphPage>
         </div>
       );
 

@@ -1,4 +1,4 @@
-export type AppScreen = "home" | "logs" | "setting";
+export type AppScreen = "home" | "logs" | "setting"| "graph";
 
 
 

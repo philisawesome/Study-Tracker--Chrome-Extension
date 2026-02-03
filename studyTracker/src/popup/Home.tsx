@@ -10,8 +10,8 @@ function Home({ setCurScreen }: Props) {
   return (
     <>
       <Stopwatch></Stopwatch>
-      <Timenow></Timenow>
       <Log onClick={() => setCurScreen("logs")}></Log>
+      <Timenow></Timenow>
     </>
   );
 }

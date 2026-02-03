@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 
 function Timenow() {
   const currentTime = new Date().toLocaleTimeString([], {
-    hour: "2-digit",
+    hour: "numeric",
     minute: "2-digit",
   });
   const intervalIdRef = useRef<number | undefined>(undefined);
@@ -11,7 +11,7 @@ function Timenow() {
   useEffect(() => {
     intervalIdRef.current = setInterval(() => {
       let newTime = new Date().toLocaleTimeString([], {
-        hour: "2-digit",
+        hour: "numeric",
         minute: "2-digit",
       });
       setCurTime(newTime);

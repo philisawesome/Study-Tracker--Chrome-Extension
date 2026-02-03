@@ -1,10 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 function Stopwatch() {
   const [isRunning, setIsRunning] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
   //const intervalIdRef = useRef<number | undefined>(undefined);
-  const startTimeRef = useRef(0);
 
   useEffect(() => {
     async function loadVal() {
@@ -47,8 +46,8 @@ function Stopwatch() {
       await chrome.storage.local.set({ isRunning: true });
       setIsRunning(true);
 
-      console.log("This is the start time from tsx " + startTimeRef.current);
-      console.log("startTime set successful from tsx");
+      //console.log("This is the start time from tsx " + startTimeRef.current);
+      //console.log("startTime set successful from tsx");
     } catch (err) {
       console.error(err);
     }
@@ -58,7 +57,7 @@ function Stopwatch() {
       await chrome.storage.local.set({ isRunning: false });
       setIsRunning(false);
 
-      console.log("stopwatch stop successful from tsx");
+      //console.log("stopwatch stop successful from tsx");
     } catch (err) {
       console.error(err);
     }
@@ -67,7 +66,7 @@ function Stopwatch() {
     try {
       await chrome.storage.local.set({ resetStop: true });
 
-      console.log("reset successful tsx");
+      //console.log("reset successful tsx");
     } catch (err) {
       console.error(err);
     }
@@ -78,12 +77,18 @@ function Stopwatch() {
     let mins = Math.floor((elapsedTime / (1000 * 60)) % 60);
     let seconds = Math.floor((elapsedTime / 1000) % 60);
     let miliSec = Math.floor((elapsedTime % 1000) / 10);
-    return `${hrs}:${mins}:${seconds}:${miliSec}`;
+    if (mins == 0 && hrs == 0) {
+      return `${String(seconds).padStart(2, "0")}.${String(miliSec).padStart(2, "0")}`;
+    } else if (hrs == 0) {
+      return `${mins}:${String(seconds).padStart(2, "0")}.${String(miliSec).padStart(2, "0")}`;
+    } else {
+      return `${hrs}:${mins}:${String(seconds).padStart(2, "0")}.${String(miliSec).padStart(2, "0")}`;
+    }
   }
   async function end() {
     try {
       await chrome.storage.local.set({ end: true });
-      console.log("session ended.");
+      //console.log("session ended.");
     } catch (err) {
       console.error(err);
     }

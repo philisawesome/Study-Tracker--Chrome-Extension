@@ -36,11 +36,19 @@ async function start(){
     isRunning=true;
     let result= await chrome.storage.local.get( "elapsedTime");
     elapsedTime = Number(result.elapsedTime) || 0;
-    if(elapsedTime==0){
+    if(elapsedTime===0){
         startTime= Date.now();
+        chrome.storage.local.set({startTime,
+            sessStart: new Date().toLocaleTimeString([], {
+                hour: "numeric",
+                minute: "2-digit"
+            })
+        })
+
     }
     else{
         startTime= Date.now()-elapsedTime;
+
     }
     
     ticking(startTime);
@@ -48,7 +56,7 @@ async function start(){
     
 
     
-    console.log("hi from start bg");
+    //console.log("hi from start bg");
     //stopWatch();
 
 }catch(err){
@@ -98,7 +106,7 @@ async function reset(){
         await chrome.storage.local.set({end});
 
         stopTicking();
-        console.log("reset succefull bg ");
+        //console.log("reset succefull bg ");
     }
     catch(err){
         console.error(err);
@@ -107,19 +115,27 @@ async function reset(){
 async function endFunc(){
     try{
         if(end){
-            const result = await chrome.storage.local.get(["elapsedTime", "sessions"]);
+            const result = await chrome.storage.local.get(["elapsedTime", "sessions","startTime", "sessStart"]);
             const sessions = (result.sessions ?? []) as any[];
             const duration = Number(result.elapsedTime) || 0; 
-            const startDate= Date.now() - duration 
-            const dayKey = new Date(startDate).toLocaleDateString().split('T')[0];
+            const startDate= Number(result.startTime) || 0;
+            const sessStart= String(result.sessStart) || '';
+            const d = new Date(startDate); 
+            const year= d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, "0");
+            const day = String(d.getDate()).padStart(2, "0");
+            const dayKey = `${year}-${month}-${day}`;
+
+            console.log("sessStart from storage:" + result.sessStart);
+            console.log("startTime from storage:", result.startTime);
 
             if (duration > 30000){
-                sessions.push({dayKey, duration });
+                sessions.push({dayKey, duration, sessStart});
 
             }
 
         await chrome.storage.local.set({ sessions });
-        console.log(JSON.stringify(sessions, null, 2));
+        //console.log(JSON.stringify(sessions, null, 2));
         reset();
         }
     }catch(err){
