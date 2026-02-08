@@ -1,6 +1,7 @@
 import type { AppScreen } from "../types/types";
 import HomeButton from "../components/HomeButton";
 import Log from "../components/Home/LogButton";
+import Graph from "../components/Graph/Graph";
 
 interface Props {
   setCurScreen: React.Dispatch<React.SetStateAction<AppScreen>>;
@@ -13,6 +14,7 @@ function GraphPage({ setCurScreen }: Props) {
         <HomeButton onClick={() => setCurScreen("home")}></HomeButton>
         <Log onClick={() => setCurScreen("logs")}></Log>
       </div>
+      <Graph></Graph>
     </>
   );
 }

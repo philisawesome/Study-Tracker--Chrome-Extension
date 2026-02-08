@@ -9,9 +9,12 @@ interface Props {
 function LogPage({ setCurScreen }: Props) {
   return (
     <>
-      <HomeButton onClick={() => setCurScreen("home")}></HomeButton>
+      <div className="button-container">
+        <HomeButton onClick={() => setCurScreen("home")}></HomeButton>
+        <GraphButton onClick={() => setCurScreen("graph")}></GraphButton>
+      </div>
+
       <Table></Table>
-      <GraphButton onClick={() => setCurScreen("graph")}></GraphButton>
     </>
   );
 }

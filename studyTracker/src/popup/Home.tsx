@@ -1,6 +1,8 @@
 import Stopwatch from "../components/Home/Stopwatch";
 import Timenow from "../components/Home/Timenow";
 import Log from "../components/Home/LogButton";
+import GraphButton from "../components/GraphButton";
+
 import type { AppScreen } from "../types/types";
 
 interface Props {
@@ -10,7 +12,12 @@ function Home({ setCurScreen }: Props) {
   return (
     <>
       <Stopwatch></Stopwatch>
-      <Log onClick={() => setCurScreen("logs")}></Log>
+      <div className="button-container">
+        {" "}
+        <Log onClick={() => setCurScreen("logs")}></Log>
+        <GraphButton onClick={() => setCurScreen("graph")}></GraphButton>
+      </div>
+
       <Timenow></Timenow>
     </>
   );

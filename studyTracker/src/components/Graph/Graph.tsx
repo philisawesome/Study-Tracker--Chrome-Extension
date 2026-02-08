@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import Chart from "chart.js/auto";
 
 function Graph() {
   type Session = {
@@ -10,7 +11,8 @@ function Graph() {
     totalDuration: number;
   };
   const [logData, setLogData] = useState<Session[]>([]);
-
+  const chartRef = useRef<HTMLCanvasElement | null>(null);
+  const chartInstanceRef = useRef<Chart | null>(null);
   useEffect(() => {
     async function loadData() {
       const result = await chrome.storage.local.get("sessions");
@@ -19,13 +21,110 @@ function Graph() {
 
     loadData();
   }, []);
+  useEffect(() => {
+    const data = days();
+    console.log("this is in the useEffecct " + JSON.stringify(data, null, 2));
+
+    if (!chartRef.current) return;
+    if (chartInstanceRef.current) {
+      chartInstanceRef.current.destroy();
+    }
+    chartInstanceRef.current = new Chart(chartRef.current, {
+      type: "line",
+
+      data: {
+        labels: data.map((row) => row.dayKey.slice(5)),
+
+        datasets: [
+          {
+            label: "Study Time",
+            data: data.map((row) => {
+              let mins = row.totalDuration / (1000 * 60);
+              if (mins - Math.floor(mins) > 0.5) {
+                //can use math round too lol.
+                mins = Math.ceil(mins);
+              } else {
+                mins = Math.floor(mins);
+              }
+              return mins;
+            }),
+            fill: false,
+            borderColor: "hsla(30, 100%, 16%, 0.894)",
+            backgroundColor: "rgb(0,0,0)",
+            borderWidth: 3, // thicker line
+            pointBackgroundColor: "#111827",
+            pointRadius: 4,
+            tension: 0.3,
+          },
+        ],
+      },
+      options: {
+        maintainAspectRatio: false,
+        responsive: true,
+        scales: {
+          x: {
+            grid: {
+              color: "rgba(0, 0, 0, 0.35)",
+            },
+            ticks: {
+              color: "#111827",
+            },
+          },
+          y: {
+            beginAtZero: true,
+            grid: {
+              color: "rgba(0, 0, 0, 0.35)",
+            },
+            ticks: {
+              color: "#111827",
+            },
+          },
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: "#111827", // dark text
+              font: {
+                weight: "bold",
+                size: 16,
+              },
+            },
+          },
+          tooltip: {
+            callbacks: {
+              label: (context) => {
+                const mins = context.parsed.y;
+
+                if (mins == null) {
+                  return "Mins This Day: 0m";
+                }
+
+                const hours = Math.floor(mins / 60);
+                const remainingMins = mins % 60;
+
+                if (hours === 0) {
+                  return `Mins This Day: ${remainingMins}m`;
+                }
+
+                return `Mins This Day: ${hours}h ${remainingMins}m`;
+              },
+            },
+          },
+        },
+      },
+    });
+    return () => {
+      chartInstanceRef.current?.destroy();
+      chartInstanceRef.current = null;
+    };
+  }, [logData]);
 
   function days() {
     const copyLogData = [...logData];
     copyLogData.sort((a, b) => b.dayKey.localeCompare(a.dayKey));
     let logGroups: Record<string, DayDate> = {};
     const data: Record<string, DayDate> = {};
-    const dayArray = [];
+    const dayArray: string[] = [];
 
     for (let i = 0; i < 7; i++) {
       const d = new Date();
@@ -41,7 +140,7 @@ function Graph() {
       if (!(newKey in logGroups)) {
         logGroups[newKey] = { totalDuration: 0 };
       }
-      logGroups[newKey].totalDuration += Number(logData[i].duration);
+      logGroups[newKey].totalDuration += Number(copyLogData[i].duration);
     }
     for (let i = 0; i < dayArray.length; i++) {
       if (dayArray[i] in logGroups) {
@@ -55,29 +154,44 @@ function Graph() {
     const finalData = Object.entries(data).map(([key, value]) => {
       return {
         dayKey: key,
-        totalDuation: value.totalDuration,
+        totalDuration: value.totalDuration,
       };
     });
     finalData.sort((a, b) => a.dayKey.localeCompare(b.dayKey));
-
+    console.log(
+      "this is finalData in Days" + JSON.stringify(finalData, null, 2),
+    );
+    console.log("dayArray:", dayArray);
+    console.log("logGroups keys:", Object.keys(logGroups));
     return finalData;
   }
-
-  function graph() {
+  function weeklyAvg() {
     const data = days();
-    let xValues = [];
-    let yValues = [];
+    let total = 0;
     for (let i = 0; i < data.length; i++) {
-      xValues.push(data[i].dayKey);
+      total += data[i].totalDuration;
     }
-    for (let i = 0; i < data.length; i++) {
-      yValues.push(data[i].totalDuation);
+
+    const totalMins = (total / (1000 * 60)) % 60;
+    const totalHrs = total / (1000 * 60 * 60);
+    const avgMins = Math.round(totalMins / 7);
+    const avgHrs = Math.round(totalHrs / 7);
+    if (avgHrs === 0) {
+      return `${avgMins}m`;
+    } else {
+      return `${avgHrs}h ${avgMins}m`;
     }
-    const yMax = Math.max(...yValues);
-    const yMin = 0;
-    let coords = [];
-    for (let i = 0; i < data.length; i++) {}
   }
+  const avg = weeklyAvg();
+  return (
+    <div className="chart-container">
+      {" "}
+      <canvas className="chart" ref={chartRef}>
+        {" "}
+      </canvas>
+      <h2> {`Your average for this week is ${avg}`}</h2>
+    </div>
+  );
 }
 
 export default Graph;
