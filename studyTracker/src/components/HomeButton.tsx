@@ -5,7 +5,7 @@ interface Props {
 function HomeButton({ onClick }: Props) {
   return (
     <div className="controls">
-      <button className="homeButton" onClick={onClick}>
+      <button className="home-button" onClick={onClick}>
         Home
       </button>
     </div>

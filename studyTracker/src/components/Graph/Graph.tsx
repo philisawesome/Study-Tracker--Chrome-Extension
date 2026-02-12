@@ -5,7 +5,6 @@ function Graph() {
   type Session = {
     dayKey: string;
     duration: number;
-    sessStart: string;
   };
   type DayDate = {
     totalDuration: number;

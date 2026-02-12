@@ -1,0 +1,79 @@
+.controls button {
+  font-size: 1.1rem;          /* slightly smaller, chunkier */
+  font-weight: bold;
+  padding: 6px 18px;          /* tighter, less modern */
+  margin: 5px;
+  min-width: 110px;
+    font-family: "Pixelify Sans", sans-serif;
+  font-weight: 400;
+  cursor: pointer;
+  color: black;
+  
+  /* PIXEL SHAPE */
+  border-radius: 7.5px;
+  border: 3px solid #000;     /* hard outline */
+
+  /* FAKE PIXEL DEPTH */
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,0.7),
+    inset 0 -2px 0 rgba(0,0,0,0.35);
+
+  transition: none;
+}
+
+/* PRESS-IN EFFECT */
+.controls button:active {
+  transform: translateY(2px);
+  box-shadow:
+    inset 0 2px 0 rgba(0,0,0,0.35),
+    inset 0 -2px 0 rgba(255,255,255,0.6);
+}
+
+/* ===== BUTTON COLORS (ENVIRONMENT MATCHED) ===== */
+
+/* START – spring grass green */
+.start-button {
+  background-color: hsl(95, 70%, 50%);
+}
+
+.start-button:hover {
+  background-color: hsl(95, 70%, 45%);
+}
+
+/* STOP – muted danger red (kept for clarity) */
+.stop-button {
+  background-color: hsl(8, 70%, 50%);
+}
+
+.stop-button:hover {
+  background-color: hsl(8, 70%, 45%);
+}
+
+/* RESET – soft sky blue */
+.reset-button {
+  background-color: hsl(205, 60%, 55%);
+}
+
+.reset-button:hover {
+  background-color: hsl(205, 60%, 50%);
+}
+
+/* SAVE – warm sunlight yellow */
+.save-button {
+  background-color: hsl(48, 85%, 55%);
+}
+
+.save-button:hover {
+  background-color: hsl(48, 85%, 48%);
+}
+
+/* OPTIONAL: ARROW BUTTON (KEEP EMPTY FOR NOW) */
+.arrow-button {}
+
+/* ===== CONTAINER (UNCHANGED) ===== */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}

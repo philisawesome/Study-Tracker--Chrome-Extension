@@ -4,7 +4,7 @@ interface Props {
 
 function GraphButton({ onClick }: Props) {
   return (
-    <div id="graph-container" className="controls">
+    <div className="controls">
       <button className="graph-button" onClick={onClick}>
         graph
       </button>

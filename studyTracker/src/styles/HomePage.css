@@ -1,69 +1,104 @@
-
-.stopWatch{
-  display: flex;
-  flex-direction: column;
-  align-items:center;
-  border: none;
-  margin-top: 40px;
-  padding: 10px;
-
-}
-
-.timeDisplay{
-  padding-top: 8px;
-  font-size: 4rem;
-  font-family: monospace;
-  font-weight: bold;
-  color: hsla(30, 100%, 16%, 0.894);
-  text-shadow: 3px 2px 6px rgba(66, 65, 65, 0.777);
-  margin-bottom: 25px;
-}
-
-.controls button{
-  font-size: 1.5 rem;
-  font-weight:bold; 
-  padding: 10px 20px; 
-  margin: 5px;
-  min-width: 110px;
-  border: none; 
-  border-radius: 7.5px;
-  cursor:pointer;
-  color:black;
-  transition: background-color 0.5s ease;
-  
-}
-
-.timeDiv{
+.stopWatch {
   display: flex;
   flex-direction: column;
   align-items: center;
   border: none;
-  margin-top: 40px;
- 
+
+  margin-top: -100px;   /* was 70px */
   padding: 10px;
 }
 
-#log-container{
-  text-align:center;
+.timeDisplay {
+  position:relative;
+  top: -65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 70px;   /* was 70px */
+
+  font-size: 4rem;
+  font-family: "Pixelify Sans", sans-serif;
+  font-weight: 700;
+
+
+color: white;
+padding:10px;
+text-shadow:
+-4px 0 #000,
+4px 0 #000,
+0 -4px #000,
+0  4px #000,
+-4px -4px #000,
+4px -4px #000,
+-4px  4px #000,
+4px  4px #000;
 }
 
-.start-button{
-  background-color: hsl(115, 100%, 40%)
-}
-.start-button:hover{
-background-color: hsl(115, 100%, 35%)
+.time-char {
+  display: inline-block;
+  -webkit-font-smoothing: antialiased;
+
+  width: .53em;  
+
+  text-align: center;
+
+  font-variant-numeric: tabular-nums; /* critical */
 }
 
-.stop-button{
-  background-color: hsl(10, 90%, 50%)
-}
-.stop-button:hover{
-background-color: hsl(10, 90%, 45%)
+.title {
+  position:relative;
+  top: -50px;
+  margin-right: 20px;
+  width: 600px;   /* try 320–360 */
+  height: 300px;   /* IMPORTANT */
+  pointer-events: none;
+  /*image-rendering: pixelated;*/
+filter: drop-shadow(6px 8px 8px rgba(0,0,0,0.5));
+
 }
 
-.reset-button{
-  background-color: hsl(205, 90%, 60%)
+
+.timeDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none;
+
+  margin-top: 20px;
+  font-size: 16px;
+  padding: 10px;
+  color: white;
+
+  text-shadow:
+    -2px 0 #000,
+     2px 0 #000,
+     0 -2px #000,
+     0  2px #000,
+    -2px -2px #000,
+     2px -2px #000,
+    -2px  2px #000,
+     2px  2px #000;
 }
-.reset-button:hover{
-background-color: hsl(205, 90%, 55%)
+
+.home-page {
+  width: 400px;
+  height: 600px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-image: url("/images/home_background.png");
+  background-size: cover;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+}
+
+.top-container {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 5px;
 }

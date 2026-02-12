@@ -1,23 +1,24 @@
 import type { AppScreen } from "../types/types";
 import HomeButton from "../components/HomeButton";
 import Log from "../components/Home/LogButton";
-import Graph from "../components/Graph/Graph";
-import "../styles/GraphPage.css";
+import Tree from "../components/Tree/Tree";
+import "../styles/TreePage.css";
 
+//import TreeButton from "../components/TreeButton";
 interface Props {
   setCurScreen: React.Dispatch<React.SetStateAction<AppScreen>>;
 }
 
-function GraphPage({ setCurScreen }: Props) {
+function TreePage({ setCurScreen }: Props) {
   return (
-    <div className="graph-page">
-      <div className="top-buttons" id="graph-banner">
+    <div className="main-container">
+      <div className="button-container">
         <HomeButton onClick={() => setCurScreen("home")}></HomeButton>
         <Log onClick={() => setCurScreen("logs")}></Log>
       </div>
-      <Graph></Graph>
+      <Tree></Tree>
     </div>
   );
 }
 
-export default GraphPage;
+export default TreePage;

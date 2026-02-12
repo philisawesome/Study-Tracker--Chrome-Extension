@@ -96,7 +96,15 @@ function Stopwatch() {
 
   return (
     <div className="stopWatch">
-      <div className="timeDisplay">{formatTime()}</div>
+      <div className="timeDisplay">
+        {formatTime()
+          .split("")
+          .map((char, i) => (
+            <span key={i} className="time-char">
+              {char}
+            </span>
+          ))}
+      </div>
       <div className="controls">
         <button
           className={!isRunning ? "start-button" : "stop-button"}
@@ -108,8 +116,8 @@ function Stopwatch() {
         <button className="reset-button" onClick={reset}>
           reset
         </button>
-        <button className="end-button" onClick={end}>
-          end
+        <button className="save-button" onClick={end}>
+          save
         </button>
       </div>
     </div>

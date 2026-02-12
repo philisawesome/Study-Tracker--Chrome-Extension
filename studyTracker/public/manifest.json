@@ -18,7 +18,14 @@
     "background":{
         "service_worker":"background.js",
         "type":"module"
-    }
+    },
+    "web_accessible_resources": [
+  {
+    "resources": ["assets/fonts/*"],
+    "matches": ["<all_urls>"]
+  }
+]
+
 
 
 

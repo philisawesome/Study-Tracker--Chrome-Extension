@@ -1,8 +1,7 @@
-import Home from "../popup/Home";
+import Home from "./HomePage";
 import LogPage from "../popup/LogPage";
 import GraphPage from "../popup/GraphPage";
-import "../styles/HomePage.css";
-import "../styles/GraphPage.css";
+import TreePage from "../popup/TreePage";
 
 import type { AppScreen } from "../types/types";
 
@@ -27,6 +26,12 @@ function App() {
       return (
         <div className="graph">
           <GraphPage setCurScreen={setCurScreen}></GraphPage>
+        </div>
+      );
+    case "tree":
+      return (
+        <div className="tree">
+          <TreePage setCurScreen={setCurScreen}></TreePage>
         </div>
       );
 

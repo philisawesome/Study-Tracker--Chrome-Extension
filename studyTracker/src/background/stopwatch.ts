@@ -126,15 +126,16 @@ async function endFunc(){
             const day = String(d.getDate()).padStart(2, "0");
             const dayKey = `${year}-${month}-${day}`;
 
-            console.log("sessStart from storage:" + result.sessStart);
-            console.log("startTime from storage:", result.startTime);
+            //console.log("sessStart from storage:" + result.sessStart);
+            //console.log("startTime from storage:", result.startTime);
 
             if (duration > 30000){
                 sessions.push({dayKey, duration, sessStart});
 
             }
 
-        await chrome.storage.local.set({ sessions });
+
+        await chrome.storage.local.set({ sessions , streak:true});
         //console.log(JSON.stringify(sessions, null, 2));
         reset();
         }
@@ -143,7 +144,7 @@ async function endFunc(){
     }
 }
 
-function storageChange(changes:any){
+function storageChange(changes: Record<string,chrome.storage.StorageChange>){
   //const changedItems = Object.keys(changes);
 
   /*for (const item of changedItems) {
@@ -151,7 +152,7 @@ function storageChange(changes:any){
     console.log("Old value: ", changes[item].oldValue);
     console.log("New value: ", changes[item].newValue);
   */
-    if(changes["isRunning"]){
+    if(changes["isRunning"] && typeof changes["isRunning"].newValue=== "boolean"){
         isRunning= changes["isRunning"].newValue;
 
         if(changes["isRunning"].newValue== true){
@@ -163,7 +164,7 @@ function storageChange(changes:any){
     }
     
     
-    if(changes["resetStop"]){
+    if(changes["resetStop"] && typeof changes["resetStop"].newValue === "boolean"){
         console.log("im in reset bg");
         resetStop = changes["resetStop"].newValue;
         if(changes["resetStop"].newValue == true){
@@ -172,7 +173,7 @@ function storageChange(changes:any){
 
     }
         
-    if(changes["end"]){
+    if(changes["end"] && typeof changes["end"].newValue === "boolean"){
         
         end = changes["end"].newValue;
         if(changes["end"].newValue == true){
