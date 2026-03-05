@@ -6,7 +6,7 @@ function Log({ onClick }: Props) {
   return (
     <div className="controls">
       <button className="log-button" onClick={onClick}>
-        logs
+        LOGS
       </button>
     </div>
   );

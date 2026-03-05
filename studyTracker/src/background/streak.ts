@@ -32,7 +32,7 @@ async function streakCal(){
     .reduce((sum,s)=> sum+ s.duration,0);
 
     
-    if(totalDuration > 45000){
+    if(totalDuration >= 1500000){
       const curDay:string= dayArray[0];
       const prevDay:string = dayArray[1];
       if(!(curDay in dailyStreak )){

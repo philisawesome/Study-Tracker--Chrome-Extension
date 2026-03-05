@@ -15,25 +15,21 @@ function Tree() {
   function getTreeImage(streakData: number): string {
     const streak = streakData;
     const tree = treeImage(streak);
+    if (streak === 11) {
+      alert("Tree is fully grown, more to come!");
+    }
     return tree;
   }
-  function addStreak() {
-    setStreakData(streakData + 1);
-  }
-  function resetStreak() {
-    setStreakData(1);
-  }
+
   const tree = getTreeImage(streakData);
 
   return (
     <div className="tree-container">
-      <div className="button-container">
-        <button onClick={addStreak}>addStreak</button>
-        <button onClick={resetStreak}>resetStreak</button>
-      </div>
-
       <div className="image-container">
         <img className="image" src={tree}></img>
+      </div>
+      <div className="text-container">
+        <h2 className="streak-text"> {`Current Streak: ${streakData}`}</h2>
       </div>
     </div>
   );

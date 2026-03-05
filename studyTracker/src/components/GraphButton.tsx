@@ -6,7 +6,7 @@ function GraphButton({ onClick }: Props) {
   return (
     <div className="controls">
       <button className="graph-button" onClick={onClick}>
-        graph
+        GRAPH
       </button>
     </div>
   );

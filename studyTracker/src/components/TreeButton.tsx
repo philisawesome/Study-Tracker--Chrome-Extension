@@ -6,7 +6,7 @@ function TreeButton({ onClick }: Props) {
   return (
     <div className="controls">
       <button className="tree-button" onClick={onClick}>
-        tree
+        TREE
       </button>
     </div>
   );

@@ -64,26 +64,6 @@ async function start(){
 }
 }
 
-/*
-async function stopWatch(){
-    const result = await chrome.storage.local.get(["startTime", "isRunning"]);
-    startTime= Number(result.startTime);
-    isRunning=Boolean(result.isRunning);
-    if(isRunning== true){
-        if (startTime== 0){
-            elapsedTime=0;
-        }
-        else{
-        elapsedTime= Date.now() - Number(startTime);
-        }
-    }
-    chrome.storage.local.set({
-        elapsedTime
-    },()=>{
-        console.log("elapsed time saved bg");
-    })
-}
-    */
 
 
 function pause(){
@@ -145,13 +125,7 @@ async function endFunc(){
 }
 
 function storageChange(changes: Record<string,chrome.storage.StorageChange>){
-  //const changedItems = Object.keys(changes);
 
-  /*for (const item of changedItems) {
-    console.log(`${item} has changed:`);
-    console.log("Old value: ", changes[item].oldValue);
-    console.log("New value: ", changes[item].newValue);
-  */
     if(changes["isRunning"] && typeof changes["isRunning"].newValue=== "boolean"){
         isRunning= changes["isRunning"].newValue;
 

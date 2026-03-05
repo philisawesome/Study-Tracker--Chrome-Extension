@@ -25,9 +25,16 @@ function Graph() {
     console.log("this is in the useEffecct " + JSON.stringify(data, null, 2));
 
     if (!chartRef.current) return;
+
     if (chartInstanceRef.current) {
       chartInstanceRef.current.destroy();
     }
+
+    // Use Pixelify Sans everywhere
+    Chart.defaults.font.family = "'Pixelify Sans', sans-serif";
+    Chart.defaults.font.size = 14;
+    Chart.defaults.color = "#111827";
+
     chartInstanceRef.current = new Chart(chartRef.current, {
       type: "line",
 
@@ -40,56 +47,88 @@ function Graph() {
             data: data.map((row) => {
               let mins = row.totalDuration / (1000 * 60);
               if (mins - Math.floor(mins) > 0.5) {
-                //can use math round too lol.
                 mins = Math.ceil(mins);
               } else {
                 mins = Math.floor(mins);
               }
               return mins;
             }),
+
             fill: false,
-            borderColor: "hsla(30, 100%, 16%, 0.894)",
-            backgroundColor: "rgb(0,0,0)",
-            borderWidth: 3, // thicker line
+            borderColor: "hsla(30, 100%, 16%, 0.95)",
+            borderWidth: 5, // thicker line
+            tension: 0.25,
+
             pointBackgroundColor: "#111827",
-            pointRadius: 4,
-            tension: 0.3,
+            pointBorderColor: "#ffffff",
+            pointBorderWidth: 2,
+            pointRadius: 6,
+            pointHoverRadius: 8,
           },
         ],
       },
+
       options: {
         maintainAspectRatio: false,
         responsive: true,
+
         scales: {
           x: {
             grid: {
-              color: "rgba(0, 0, 0, 0.35)",
+              color: "rgba(0, 0, 0, 0.55)",
             },
             ticks: {
               color: "#111827",
-            },
-          },
-          y: {
-            beginAtZero: true,
-            grid: {
-              color: "rgba(0, 0, 0, 0.35)",
-            },
-            ticks: {
-              color: "#111827",
-            },
-          },
-        },
-        plugins: {
-          legend: {
-            labels: {
-              color: "#111827", // dark text
               font: {
+                family: "'Pixelify Sans', sans-serif",
+                size: 14,
                 weight: "bold",
-                size: 16,
               },
             },
           },
+
+          y: {
+            beginAtZero: true,
+            grid: {
+              color: "rgba(0, 0, 0, 0.55)",
+              lineWidth: 2,
+            },
+            ticks: {
+              color: "#111827",
+              font: {
+                family: "'Pixelify Sans', sans-serif",
+                size: 14,
+                weight: "bold",
+              },
+            },
+          },
+        },
+
+        plugins: {
+          legend: {
+            labels: {
+              boxWidth: 0,
+              padding: 15,
+              color: "#111827",
+              font: {
+                family: "'Pixelify Sans', sans-serif",
+                weight: "bold",
+                size: 18,
+              },
+            },
+          },
+
           tooltip: {
+            titleFont: {
+              family: "'Pixelify Sans', sans-serif",
+              size: 14,
+            },
+            bodyFont: {
+              family: "'Pixelify Sans', sans-serif",
+              size: 14,
+            },
+            padding: 10,
+
             callbacks: {
               label: (context) => {
                 const mins = context.parsed.y;
@@ -112,12 +151,12 @@ function Graph() {
         },
       },
     });
+
     return () => {
       chartInstanceRef.current?.destroy();
       chartInstanceRef.current = null;
     };
   }, [logData]);
-
   function days() {
     const copyLogData = [...logData];
     copyLogData.sort((a, b) => b.dayKey.localeCompare(a.dayKey));
@@ -157,11 +196,7 @@ function Graph() {
       };
     });
     finalData.sort((a, b) => a.dayKey.localeCompare(b.dayKey));
-    console.log(
-      "this is finalData in Days" + JSON.stringify(finalData, null, 2),
-    );
-    console.log("dayArray:", dayArray);
-    console.log("logGroups keys:", Object.keys(logGroups));
+
     return finalData;
   }
   function weeklyAvg() {
@@ -188,7 +223,9 @@ function Graph() {
       <canvas className="chart" ref={chartRef}>
         {" "}
       </canvas>
-      <h2> {`Your average for this week is ${avg}`}</h2>
+      <div className="avg-container">
+        <h2 className="avg-text"> {`Your average for this week is ${avg}`}</h2>
+      </div>
     </div>
   );
 }

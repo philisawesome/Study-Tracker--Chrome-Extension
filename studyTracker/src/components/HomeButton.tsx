@@ -6,7 +6,7 @@ function HomeButton({ onClick }: Props) {
   return (
     <div className="controls">
       <button className="home-button" onClick={onClick}>
-        Home
+        HOME
       </button>
     </div>
   );

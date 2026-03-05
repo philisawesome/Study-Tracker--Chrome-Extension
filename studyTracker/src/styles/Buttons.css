@@ -66,11 +66,34 @@
 .save-button:hover {
   background-color: hsl(48, 85%, 48%);
 }
+.log-button:hover{
 
-/* OPTIONAL: ARROW BUTTON (KEEP EMPTY FOR NOW) */
-.arrow-button {}
+  background-color: hsl(0, 0%, 88%);;
+}
+.graph-button:hover{
+  background-color: hsl(0, 0%, 88%);;
+}
+.tree-button:hover{
+  background-color: hsl(0, 0%, 88%);;
+}
+.home-button:hover{
+  background-color: hsl(0, 0%, 88%);;
+}
 
-/* ===== CONTAINER (UNCHANGED) ===== */
+.arrow-button {
+  width: 40px;  
+  height: 40px;
+
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  margin-top:12px;
+  transition: transform 0.2s ease;
+
+  cursor: pointer;
+
+  image-rendering: pixelated;
+}
 .button-container {
   display: flex;
   justify-content: center;

@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 function Stopwatch() {
   const [isRunning, setIsRunning] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
-  //const intervalIdRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     async function loadVal() {
@@ -19,13 +18,6 @@ function Stopwatch() {
       }
     }
     function effectFunc(changes: any) {
-      /*if (Number(result.startTime) != 0) {
-          startTimeRef.current = Number(result.startTime);
-        }
-        console.log(startTimeRef.current);
-        setIsRunning(Boolean(result.isRunning));
-        console.log(isRunning);
-        */
       if (changes["elapsedTime"]) {
         setElapsedTime(changes["elapsedTime"].newValue);
       }
@@ -45,9 +37,6 @@ function Stopwatch() {
     try {
       await chrome.storage.local.set({ isRunning: true });
       setIsRunning(true);
-
-      //console.log("This is the start time from tsx " + startTimeRef.current);
-      //console.log("startTime set successful from tsx");
     } catch (err) {
       console.error(err);
     }
@@ -56,8 +45,6 @@ function Stopwatch() {
     try {
       await chrome.storage.local.set({ isRunning: false });
       setIsRunning(false);
-
-      //console.log("stopwatch stop successful from tsx");
     } catch (err) {
       console.error(err);
     }
@@ -65,8 +52,6 @@ function Stopwatch() {
   async function reset() {
     try {
       await chrome.storage.local.set({ resetStop: true });
-
-      //console.log("reset successful tsx");
     } catch (err) {
       console.error(err);
     }
@@ -80,15 +65,14 @@ function Stopwatch() {
     if (mins == 0 && hrs == 0) {
       return `${String(seconds).padStart(2, "0")}.${String(miliSec).padStart(2, "0")}`;
     } else if (hrs == 0) {
-      return `${mins}:${String(seconds).padStart(2, "0")}.${String(miliSec).padStart(2, "0")}`;
+      return `${String(mins).padStart(2, "0")}:${String(seconds).padStart(2, "0")}.${String(miliSec).padStart(2, "0")}`;
     } else {
-      return `${hrs}:${mins}:${String(seconds).padStart(2, "0")}.${String(miliSec).padStart(2, "0")}`;
+      return `${hrs}:${String(mins).padStart(2, "0")}:${String(seconds).padStart(2, "0")}.${String(miliSec).padStart(2, "0")}`;
     }
   }
   async function end() {
     try {
       await chrome.storage.local.set({ end: true });
-      //console.log("session ended.");
     } catch (err) {
       console.error(err);
     }
@@ -110,14 +94,14 @@ function Stopwatch() {
           className={!isRunning ? "start-button" : "stop-button"}
           onClick={!isRunning ? start : stop}
         >
-          {!isRunning ? "start" : "stop"}
+          {!isRunning ? "START" : "STOP"}
         </button>
 
         <button className="reset-button" onClick={reset}>
-          reset
+          RESET
         </button>
         <button className="save-button" onClick={end}>
-          save
+          SAVE
         </button>
       </div>
     </div>

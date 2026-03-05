@@ -16,7 +16,7 @@ function treeImage(streak:number):string{
 
   ]);
 
-  return imageMap.get(streak) || "/treePngs/tree_day_1.png";
+  return streak >=10?"/treePngs/tree_day_10.png": imageMap.get(streak) || "/treePngs/tree_day_1.png";
   
 
 

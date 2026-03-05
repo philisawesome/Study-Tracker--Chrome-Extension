@@ -15,9 +15,7 @@ function LogPage({ setCurScreen }: Props) {
         <HomeButton onClick={() => setCurScreen("home")}></HomeButton>
         <GraphButton onClick={() => setCurScreen("graph")}></GraphButton>
       </div>
-      <div className="table-container">
-        <Table></Table>
-      </div>
+      <Table></Table>
     </div>
   );
 }

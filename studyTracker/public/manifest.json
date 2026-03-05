@@ -1,32 +1,30 @@
 {
-    "manifest_version": 3, 
-    "version": "1.0.0",
-    "name":"Study Tracker",
-    "action":{
-        "default_popup":"popup.html",
-        "default_title":"Study Tracker"
+  "manifest_version": 3,
+  "version": "1.0.1",
+  "name": "Focus Tracker",
 
-    },
-    "permissions":[
-        "scripting",
-        "storage"
-    ],
-    "host_permissions":[
-        "http://*/*",
-        "https://*/*"
-    ],
-    "background":{
-        "service_worker":"background.js",
-        "type":"module"
-    },
-    "web_accessible_resources": [
-  {
-    "resources": ["assets/fonts/*"],
-    "matches": ["<all_urls>"]
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Focus Tracker",
+    "default_icon": {
+      "16": "images/icon116.png",
+      "32": "images/icon32.png"
+    }
+  },
+
+  "icons": {
+    "16": "images/icon116.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+
+  "permissions": [
+    "storage"
+  ],
+
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
   }
-]
-
-
-
-
 }
