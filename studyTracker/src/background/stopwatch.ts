@@ -106,8 +106,7 @@ async function endFunc(){
             const day = String(d.getDate()).padStart(2, "0");
             const dayKey = `${year}-${month}-${day}`;
 
-            //console.log("sessStart from storage:" + result.sessStart);
-            //console.log("startTime from storage:", result.startTime);
+
 
             if (duration > 30000){
                 sessions.push({dayKey, duration, sessStart});
@@ -115,8 +114,9 @@ async function endFunc(){
             }
 
 
-        await chrome.storage.local.set({ sessions , streak:true});
-        //console.log(JSON.stringify(sessions, null, 2));
+        await chrome.storage.local.set({ sessions});
+        await chrome.storage.local.set({ sessions, streak: false });
+        await chrome.storage.local.set({ sessions, streak: true });
         reset();
         }
     }catch(err){
@@ -139,7 +139,6 @@ function storageChange(changes: Record<string,chrome.storage.StorageChange>){
     
     
     if(changes["resetStop"] && typeof changes["resetStop"].newValue === "boolean"){
-        console.log("im in reset bg");
         resetStop = changes["resetStop"].newValue;
         if(changes["resetStop"].newValue == true){
             reset();

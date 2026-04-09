@@ -22,7 +22,6 @@ function Graph() {
   }, []);
   useEffect(() => {
     const data = days();
-    console.log("this is in the useEffecct " + JSON.stringify(data, null, 2));
 
     if (!chartRef.current) return;
 
@@ -43,7 +42,7 @@ function Graph() {
 
         datasets: [
           {
-            label: "Study Time",
+            label: "Focus Time",
             data: data.map((row) => {
               let mins = row.totalDuration / (1000 * 60);
               if (mins - Math.floor(mins) > 0.5) {
