@@ -205,10 +205,9 @@ function Graph() {
       total += data[i].totalDuration;
     }
 
-    const totalMins = (total / (1000 * 60)) % 60;
-    const totalHrs = total / (1000 * 60 * 60);
-    const avgMins = Math.round(totalMins / 7);
-    const avgHrs = Math.round(totalHrs / 7);
+    const avgDuration = total / 7;
+    const avgHrs = Math.floor(avgDuration / (1000 * 60 * 60));
+    const avgMins = Math.round((avgDuration % (1000 * 60 * 60)) / (1000 * 60));
     if (avgHrs === 0) {
       return `${avgMins}m`;
     } else {

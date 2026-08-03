@@ -20,9 +20,7 @@ async function streakCal() {
     const todayKey = getDayKey(0);
     const yesterdayKey = getDayKey(-1);
 
-    // Sum duration for sessions belonging to today OR yesterday
-    // This handles the "saved after midnight but session was yesterday" case
-    const candidates = [todayKey, yesterdayKey];
+    const candidates = [yesterdayKey, todayKey];
 
     for (const targetDay of candidates) {
       const totalDuration = sessions
@@ -35,7 +33,7 @@ async function streakCal() {
 
         dailyStreak[targetDay] = {
           curStreak: prevDay ? dailyStreak[prevDay].curStreak + 1 : 1,
-          prevDay: targetDay,
+          prevDay: prevDay ?? "",
         };
 
         await chrome.storage.local.set({ dailyStreak, streak: false });
@@ -58,9 +56,9 @@ function getDayKey(offset: number): string {
 
 // Finds the most recent day in dailyStreak that is exactly 1 day before targetDay
 function getPrevStreakDay(dailyStreak: Record<string, Streak>, targetDay: string): string | null {
-  const target = new Date(targetDay);
-  const expectedPrev = new Date(target);
-  expectedPrev.setDate(target.getDate() - 1);
+
+  const [year, month, day] = targetDay.split("-").map(Number);
+  const expectedPrev = new Date(year, month - 1, day - 1);
   const expectedPrevKey = `${expectedPrev.getFullYear()}-${String(expectedPrev.getMonth() + 1).padStart(2, "0")}-${String(expectedPrev.getDate()).padStart(2, "0")}`;
   return expectedPrevKey in dailyStreak ? expectedPrevKey : null;
 }
